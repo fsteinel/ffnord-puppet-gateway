@@ -1,0 +1,2 @@
+start a network$name.service if batman brings up a new device do so via a udev rule
+#http://lists.freedesktop.org/archives/systemd-devel/2011-October/003586.html
