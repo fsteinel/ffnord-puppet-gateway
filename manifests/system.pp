@@ -27,13 +27,18 @@ class ffnord::system::conntrack (
      require => File['/etc/sysctl.d/conntrack.conf'];
   }
 
+  $routing=$lsbdistcodename ? {
+        'wheezy' => 'routing.conf.wheezy',
+        default  => 'routing.conf',
+  }
+
   file {
     "/etc/sysctl.d/routing.conf":
       ensure => file,
       mode => '0644',
       owner => 'root',
       group => 'root',
-      content => template("ffnord/etc/sysctl.d/routing.conf.wheezy");
+      content => template("ffnord/etc/sysctl.d/${routing}");
   }
 
   exec {
