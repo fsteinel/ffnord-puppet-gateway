@@ -1,5 +1,7 @@
 class ffnord::monitor::zabbix ( $zabbixserver
                               ) {
+  include "apt::key"
+  include "apt::source"
 
   apt::key {
     'zabbix-official-repo.key':

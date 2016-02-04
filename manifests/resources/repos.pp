@@ -1,6 +1,8 @@
 class ffnord::resources::repos (
   $debian_mirror = $ffnord::params::debian_mirror
 ) inherits ffnord::params {
+  include "apt::source"
+
   apt::source { 'repo.universe-factory':
     location   => 'http://repo.universe-factory.net/debian/',
     release    => 'sid',
