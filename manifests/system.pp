@@ -33,7 +33,7 @@ class ffnord::system::conntrack (
       mode => '0644',
       owner => 'root',
       group => 'root',
-      content => template("ffnord/etc/sysctl.d/routing.conf");
+      content => template("ffnord/etc/sysctl.d/routing.conf.wheezy");
   }
 
   exec {
