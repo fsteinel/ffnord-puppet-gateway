@@ -64,7 +64,9 @@ class ffnord::tinc (
       target => "/etc/tinc/icvpn/scripts/post-merge",
       require => Vcsrepo['/etc/tinc/icvpn/'],
       mode => '0755';
-    if($lsbdistcodename=="wheezy") {
+  }
+  if($lsbdistcodename=="wheezy") {
+    file {
       '/etc/apt/preferences.d/tinc':
             ensure => file,
             mode => "0644",

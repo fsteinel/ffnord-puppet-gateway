@@ -6,7 +6,9 @@ class ffnord::resources::bird (
     '/etc/bird/':
       ensure => directory,
       mode => '0755';
-    if($lsbdistcodename=="wheezy"){
+  }
+  if($lsbdistcodename=="wheezy"){
+    file {
      '/etc/apt/preferences.d/bird':
         ensure => file,
         mode => "0644",

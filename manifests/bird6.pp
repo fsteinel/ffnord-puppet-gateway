@@ -22,7 +22,7 @@ class ffnord::bird6 (
   } else {
     package { 
       'bird6':
-        ensure => installed,
+        ensure => installed;
     }
   }
   file {
