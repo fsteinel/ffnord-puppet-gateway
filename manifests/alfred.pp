@@ -1,26 +1,15 @@
 class ffnord::alfred (
   $master = false
 ) {
-  vcsrepo { '/opt/alfred':
-    ensure => present,
-    provider => git,
-    revision => '6ffa009183cf5a223bf2198f7711b143b1e80109',
-    source => 'http://git.open-mesh.org/alfred.git';
-  }
-
-  file { '/etc/init.d/alfred':
+  file { '/usr/local/bin/mesh-announce':
     ensure => file,
     mode => '0755',
-    source => 'puppet:///modules/ffnord/etc/init.d/alfred';
-  }
-
-  file { '/usr/local/bin/alfred-announce':
-    ensure => file,
-    mode => '0755',
-    source => 'puppet:///modules/ffnord/usr/local/bin/alfred-announce';
+    source => 'puppet:///modules/ffnord/usr/local/bin/mesh-announce';
   }
 
   package {
+    'alfred':
+      ensure => installed;
     'build-essential':
       ensure => installed;
     'pkg-config':
@@ -46,20 +35,20 @@ class ffnord::alfred (
     require => [Exec['alfred'],File['/etc/init.d/alfred']];
   }
 
-  vcsrepo { '/opt/alfred-announce':
+  vcsrepo { '/opt/mesh-announce':
     ensure => present,
     provider => git,
-    source => 'https://github.com/ffnord/ffnord-alfred-announce.git',
+    source => 'https://github.com/ffnord/mesh-announce.git',
     revision => 'b31922fd53d2796b69ac4bd260ad837a200d0d5f',
     require => [Package['python3'],Package['ethtool']];
   }
 
   cron {
   'update-alfred-announce':
-    command => 'PATH=/opt/alfred/:/bin:/usr/bin:/sbin:/usr/sbin/:$PATH /usr/local/bin/alfred-announce',
+    command => 'PATH=/opt/alfred/:/bin:/usr/bin:/sbin:/usr/sbin/:$PATH /usr/local/bin/mesh-announce',
     user    => root,
     minute  => '*',
-    require => [Vcsrepo['/opt/alfred-announce'], Vcsrepo['/opt/alfred'],File['/usr/local/bin/alfred-announce']];
+    require => [Vcsrepo['/opt/mesh-announce'], Vcsrepo['/opt/alfred'],File['/usr/local/bin/mesh-announce']];
   }
 
   ffnord::firewall::service { 'alfred':
