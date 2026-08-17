@@ -1,10 +1,10 @@
 class ffnord::alfred (
   $master = false
 ) {
-  file { '/usr/local/bin/mesh-announce':
+  file { '/opt/mesh-announce/respondd.conf':
     ensure => file,
     mode => '0755',
-    source => 'puppet:///modules/ffnord/usr/local/bin/mesh-announce';
+    source => 'puppet:///modules/ffnord/opt/mesh-announce/respondd.conf';
   }
 
   package {
@@ -22,17 +22,19 @@ class ffnord::alfred (
       ensure => installed;
   }
 
-  exec { 'alfred':
-    command => '/usr/bin/make CONFIG_ALFRED_CAPABILITIES=n',
-    cwd => '/opt/alfred/',
-    require => [Vcsrepo['/opt/alfred'],Package['build-essential'],Package['pkg-config'],Package['libgps-dev']];
-  }
 
   service { 'alfred':
     ensure => running,
-    hasrestart => true,
-    enable => false,
-    require => [Exec['alfred'],File['/etc/init.d/alfred']];
+  }
+
+  service::unit_file { 'respondd':
+    content => file("/opt/mesh-announce/respondd.service"),
+    enable => true,
+    active => true,
+  }
+
+  service { 'respondd':
+    ensure => running,
   }
 
   vcsrepo { '/opt/mesh-announce':
@@ -45,10 +47,10 @@ class ffnord::alfred (
 
   cron {
   'update-alfred-announce':
-    command => 'PATH=/opt/alfred/:/bin:/usr/bin:/sbin:/usr/sbin/:$PATH /usr/local/bin/mesh-announce',
+    command => 'PATH=/bin:/usr/bin:/sbin:/usr/sbin/:$PATH /opt/mesh-announce/announce.sh',
     user    => root,
     minute  => '*',
-    require => [Vcsrepo['/opt/mesh-announce'], Vcsrepo['/opt/alfred'],File['/usr/local/bin/mesh-announce']];
+    require => [Vcsrepo['/opt/mesh-announce'],File['/opt/mesh-announce/announce.sh']];
   }
 
   ffnord::firewall::service { 'alfred':
