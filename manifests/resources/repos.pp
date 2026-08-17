@@ -13,14 +13,6 @@ class ffnord::resources::repos (
     key_server => 'pgpkeys.mit.edu';
   }
 
-  apt::source { 'debian.draic.info':
-    location    => 'http://debian.draic.info/',
-    release     => 'wheezy',
-    repos       => 'main',
-    include_src => false,
-    key_server  => 'pgpkeys.mit.edu';
-  }
-
   apt::source { 'debian-backports':
     location          => $debian_mirror,
     required_packages => 'debian-keyring debian-archive-keyring',
