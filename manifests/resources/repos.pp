@@ -5,13 +5,6 @@ class ffnord::resources::repos (
     'apt-transport-https':
       ensure => installed;
   } ->
-  apt::source { 'repo.universe-factory':
-    location   => 'https://repo.universe-factory.net/debian/',
-    release    => 'sid',
-    repos      => 'main',
-    key        => '16EF3F64CB201D9C',
-    key_server => 'pgpkeys.mit.edu';
-  }
 
   apt::source { 'debian-backports':
     location          => $debian_mirror,
