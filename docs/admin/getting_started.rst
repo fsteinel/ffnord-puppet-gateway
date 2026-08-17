@@ -17,8 +17,8 @@ The ffnord-puppet-gateway module has some Dependencies to the host:
  * puppetlabs-apt      (https://forge.puppet.com/modules/puppetlabs/apt/reference)
  * puppetlabs-vcsrepo  (https://forge.puppet.com/modules/puppetlabs/vcsrepo/reference)
  * saz-sudo            (https://forge.puppet.com/modules/saz/sudo/reference)
- * camptocamp-accounts (https://forge.puppet.com/modules/camptocamp/accounts/readme)
-   old (https://forge.puppet.com/modules/torrancew/account/readme)
+ * camptocamp-accounts (https://forge.puppet.com/modules/camptocamp/accounts/reference)
+   old (https://forge.puppet.com/modules/torrancew/account/reference)
 
 Recieving the module
 ````````````````````
