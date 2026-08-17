@@ -9,15 +9,16 @@ Dependencies
 
 The ffnord-puppet-gateway module has some Dependencies to the host:
 
-* OS: Debian 7.7 (Wheezy) or 8.1 (Jessie)
+* OS: Debian 13.6 (Trixie)
 * Packages: puppet git apt-transport-https
 * Preinstalled needed puppet modules
 
- * puppetlabs-stdlib
- * puppetlabs-apt
- * puppetlabs-vcsrepo
- * saz-sudo
- * torrancew-account
+ * puppetlabs-stdlib   (https://forge.puppet.com/modules/puppetlabs/stdlib/reference)
+ * puppetlabs-apt      (https://forge.puppet.com/modules/puppetlabs/apt/reference)
+ * puppetlabs-vcsrepo  (https://forge.puppet.com/modules/puppetlabs/vcsrepo/reference)
+ * saz-sudo            (https://forge.puppet.com/modules/saz/sudo/reference)
+ * camptocamp-accounts (https://forge.puppet.com/modules/camptocamp/accounts/readme)
+   old (https://forge.puppet.com/modules/torrancew/account/readme)
 
 Recieving the module
 ````````````````````
@@ -42,11 +43,11 @@ The following lists possible commands for preparing a fresh ``Debian`` host.
 ::
 
   apt-get install --no-install-recommends puppet git
-  puppet module install puppetlabs-stdlib --version 4.15.0
-  puppet module install puppetlabs-apt --version 1.5.1
-  puppet module install puppetlabs-vcsrepo --version 1.3.2
-  puppet module install saz-sudo --version 4.1.0
-  puppet module install torrancew-account --version 0.1.0
+  puppet module install puppetlabs-stdlib --version 10.0.2
+  puppet module install puppetlabs-apt --version 11.3.2
+  puppet module install puppetlabs-vcsrepo --version 7.0.0
+  puppet module install saz-sudo --version 9.0.2
+  puppet module install camptocamp-account --version 2.1.1
 
   cd /etc/puppet/modules
   git clone https://github.com/ffnord/ffnord-puppet-gateway ffnord
