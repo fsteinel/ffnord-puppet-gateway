@@ -3,7 +3,7 @@ class ffnord::monitor::zabbix ( $zabbixserver
 
   apt::key {
     'zabbix-official-repo.key':
-      key => '79EA5ED4',
+      key => 'D13D58E479EA5ED4',
       key_source => 'http://repo.zabbix.com/zabbix-official-repo.key';
   }
 
