@@ -43,6 +43,8 @@ Summary
 
 The following lists possible commands for preparing a fresh ``Debian`` host.
 
+TODO: move to openvox https://voxpupuli.org/openvox/install/
+
 ::
 
   apt-get install --no-install-recommends puppet git
