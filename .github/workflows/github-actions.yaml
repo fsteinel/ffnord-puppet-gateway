@@ -3,15 +3,6 @@ name: Puppet Parser Validate
 on: [push]
 
 jobs:
-  puppet-parser-validate:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-
-    - name: puppet-parser-validate
-      uses: irasnyd/puppet-parser-validate-action@master
-      with:
-        args: ./
+  puppet:
+    name: Puppet
+    uses: voxpupuli/gha-puppet/.github/workflows/basic.yml@v3
