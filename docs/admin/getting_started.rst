@@ -43,7 +43,7 @@ Summary
 
 The following lists possible commands for preparing a fresh ``Debian`` host.
 
-TODO: move to openvox https://voxpupuli.org/openvox/install/
+TODO: move to openvox https://voxpupuli.org/openvox/install/ https://voxpupuli.org/blog/2026/04/02/enhanced-module-and-openvox-agent-testing/
 
 ::
 
