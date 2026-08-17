@@ -1,5 +1,6 @@
 class ffnord::resources::bird (
   #https://pkg.labs.nic.cz/doc/?project=bird
+  #https://gitlab.nic.cz/labs/bird/-/wikis/transition-notes-to-bird-2
   apt::key {
     'cznic-labs-pkg.gpg':
       key => '0xAB6A303124019B64',

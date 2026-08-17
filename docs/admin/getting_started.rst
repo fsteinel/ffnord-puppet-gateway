@@ -1,6 +1,8 @@
 Getting Started
 ===============
 
+https://www.open-mesh.org/projects/open-mesh/wiki/Download overview of batman versions
+
 Preparation
 -----------
 
