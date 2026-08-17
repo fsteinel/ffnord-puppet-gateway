@@ -1,6 +1,7 @@
 define ffnord::mesh(
   $mesh_name,         # Name of your community, e.g. 'Freifunk Gotham City'
   $mesh_code,         # Code of your community, e.g. 'ffgc'
+  $mesh_contact,      # Contact of your NOC community, e.g. 'address-of-your-noc-team@@example.org'
   $mesh_as,           # AS of your community
   $mesh_mac,          # mac address mesh device: e.g. '52:54:00:bd:e6:d4'
   $vpn_mac,           # mac address vpn device, ideally != mesh_mac and unique

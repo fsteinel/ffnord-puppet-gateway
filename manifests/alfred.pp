@@ -7,6 +7,12 @@ class ffnord::alfred (
     source => 'puppet:///modules/ffnord/opt/mesh-announce/respondd.conf';
   }
 
+  file {
+    "/opt/mesh-announce/${mesh_code}-respondd.conf":
+    ensure => file,
+    content => template('ffnord/etc/mesh-announce/respondd.conf.erb'),
+  }
+
   package {
     'alfred':
       ensure => installed;

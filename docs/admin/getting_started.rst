@@ -106,6 +106,7 @@ example manifest and its dependencies.
     'mesh_ffgc':
       mesh_name    => "Freifunk Gotham City",        # Name of your community, e.g. 'Freifunk Gotham City'
       mesh_code    => "ffgc",                        # Code of your community, e.g. 'ffgc'
+      mesh_contact => "address-of-your-noc-team@@example.org", # Contact of your NOC community, e.g. 'address-of-your-noc-team@@example.org'
       mesh_as      => 65035,                         # AS of your community
       mesh_mac     => "de:ad:be:ef:de:ad",           # mac address mesh device: e.g. '52:54:00:bd:e6:d4'
       vpn_mac      => "de:ad:be:ff:de:ad",           # mac address vpn device, ideally != mesh_mac and unique
@@ -195,9 +196,9 @@ example manifest and its dependencies.
   class { 'ffnord::mosh': }
 
   class { 'ffnord::nullmailer':
-    adminaddr => 'noc@example.com',
-    remotes => 'mx.gotham.com',
-    defaultdomain => 'ffgo.de'.
+    adminaddr => 'address-of-your-noc-team@@example.org',
+    remotes => 'mx.example.org',
+    defaultdomain => 'ffgc.de'.
     
   }
 
