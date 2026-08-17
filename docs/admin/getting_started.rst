@@ -19,6 +19,7 @@ The ffnord-puppet-gateway module has some Dependencies to the host:
  * saz-sudo            (https://forge.puppet.com/modules/saz/sudo/reference)
  * camptocamp-accounts (https://forge.puppet.com/modules/camptocamp/accounts/reference)
    old (https://forge.puppet.com/modules/torrancew/account/reference)
+ * puppet-systemd      (https://forge.puppet.com/modules/puppet/systemd/readme)
 
 Recieving the module
 ````````````````````
@@ -48,6 +49,7 @@ The following lists possible commands for preparing a fresh ``Debian`` host.
   puppet module install puppetlabs-vcsrepo --version 7.0.0
   puppet module install saz-sudo --version 9.0.2
   puppet module install camptocamp-account --version 2.1.1
+  puppet module install puppet-systemd --version 10.0.0
 
   cd /etc/puppet/modules
   git clone https://github.com/ffnord/ffnord-puppet-gateway ffnord
