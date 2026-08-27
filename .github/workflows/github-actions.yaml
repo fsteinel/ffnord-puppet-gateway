@@ -3,9 +3,8 @@
 on:
   push:
     branches: 
-    - [$default-branch] 
-    - trixie 
-    - trixie-try3
+    - 'trixie'
+    - 'trixie-try3'
   pull_request:
 
 concurrency:
