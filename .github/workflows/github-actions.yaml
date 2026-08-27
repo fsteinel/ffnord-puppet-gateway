@@ -3,7 +3,10 @@ name: Puppet CI (basic)
 
 on:
   push:
-    branches: [$default-branch] trixie trixie-try3
+    branches: 
+    - [$default-branch] 
+    - trixie 
+    - trixie-try3
   pull_request:
 
 concurrency:
