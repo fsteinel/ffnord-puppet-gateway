@@ -21,5 +21,5 @@ jobs:
       # Use this for monorepos/control repos.
       working-directory: '.'
       # Install additional apt packages if required (space-separated).
-      additional_packages: 'puppetlabs-stdlib puppetlabs-apt puppetlabs-vcsrepo saz-sudo camptocamp-accounts puppet-systemd'
+      additional_packages: ''
 name: Puppet Parser Validate
