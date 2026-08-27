@@ -1,5 +1,4 @@
 ---
-name: Puppet CI (basic)
 
 on:
   push:
