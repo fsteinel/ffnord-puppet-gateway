@@ -212,7 +212,9 @@ Firewall
 The firewall rules created are collected in ``/etc/iptables.d``, they are not applied
 automatically! You have to call ``build-firewall`` to apply them.
 
-On Debian jessie
+On Debian trixie
+TODO: add to puppet module
+TODO: test if still needed in trixie
 `````````````
 you have to load the ip_tables and ip_conntrack module manally before applying the puppet manifest:
 
@@ -223,7 +225,9 @@ you have to load the ip_tables and ip_conntrack module manally before applying t
 
 ::
 
-On Debian jessie add it to autoĺoad on reboot:
+On Debian trixie add it to autoĺoad on reboot:
+TODO: add to puppet module
+TODO: test if still needed in trixie
 
 ::
 
