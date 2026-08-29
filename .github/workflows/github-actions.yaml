@@ -21,4 +21,3 @@ jobs:
       working-directory: '.'
       # Install additional apt packages if required (space-separated).
       additional_packages: ''
-name: Puppet Parser Validate
