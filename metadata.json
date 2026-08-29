@@ -1,0 +1,34 @@
+{
+	"name": "Freifunk Gotham City",
+	"version": "0.0.1",
+	"author": "mindeye leokrueger Klaebe rubo77 tarnatos tobleminer tumelum MTRNord Lüth ohrensessel fsteinel",
+	"summary": "Installs, configures, and manages the Freifunk gateway services.",
+	"license": "unkown",
+	"source": "https://github.com/ffnord/ffnord-puppet-gateway",
+	"project_page": "https://github.com/ffnord/ffnord-puppet-gateway",
+	"issues_url": "https://github.com/ffnord/ffnord-puppet-gateway/issues",
+	"dependencies": [
+		{ "name":"puppetlabs-stdlib","version_requirement":"=4.15.0" },
+		{ "name":"puppetlabs-apt","version_requirement":"=1.5.1" },
+		{ "name":"puppetlabs-vcsrepo","version_requirement":"=1.3.2" },
+		{ "name":"saz-sudo","version_requirement":"=4.1.0" },
+		{ "name":"torrancew-account","version_requirement":"=0.1.0" }
+	],
+	"data_provider": "hiera",
+	"operatingsystem_support": [
+		{
+			 "operatingsystem": "Debian",
+			       "operatingsystemrelease": [ 
+				       "7",
+				       "8"
+			       ]
+		}
+	],
+	"requirements": [
+		{
+			"name": "puppet",
+			"version_requirement": ">= 4.5.0 < 5.0.0"
+		}
+	],
+	"description": "Freifunk gateway services Module for Debian."
+}
