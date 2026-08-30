@@ -1,4 +1,4 @@
-define ffnord::fastd( $mesh_code,
+define ffnord::fastd ( $mesh_code,
   $mesh_interface, # may not be more than 10 characters
   $mesh_mac,
   $mesh_hop_penalty = 60, # hop penalty for batman advanced
@@ -32,7 +32,7 @@ define ffnord::fastd( $mesh_code,
 
   file {
   "/etc/fastd/${mesh_interface}-mvpn/":
-    ensure  =>directory,
+    ensure  => directory,
     require => Package[ffnord::resources::fastd];
   "/etc/fastd/${mesh_interface}-mvpn/fastd.conf":
     ensure  => file,
