@@ -35,7 +35,7 @@ class ffnord::alfred (
 
   exec { 'alfred':
     command => '/usr/bin/make CONFIG_ALFRED_CAPABILITIES=n',
-    cwd => '/opt/alfred/',
+    cwd     => '/opt/alfred/',
     require => [Vcsrepo['/opt/alfred'],Package['build-essential'],Package['pkg-config'],Package['libgps-dev']];
   }
 
