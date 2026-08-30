@@ -1,4 +1,4 @@
-define ffnord::batman_adv(
+define ffnord::batman_adv (
   $mesh_code,
   $mesh_hop_penalty,
   $batman_it = 5000,
