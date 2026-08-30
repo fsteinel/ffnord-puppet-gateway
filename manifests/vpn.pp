@@ -63,8 +63,8 @@ class ffnord::vpn::provider () {
 #
 # Setup an openvpn provfile based on a given directory. The directory
 # should provide all needed certificates and configuration. The configuration
-# file need to be named "${name}.conf", should be compatible with being
-# places in "/etc/openvpn/${name}/" and create an tun device tun-anonvpn.
+# file need to be named "${vpn_name}.conf", should be compatible with being
+# places in "/etc/openvpn/${vpn_name}/" and create an tun device tun-anonvpn.
 #
 # To be conform with the overall setup the configuration file should also 
 # include following lines:
@@ -74,13 +74,13 @@ class ffnord::vpn::provider () {
 # up anonvpn-up.sh
 #
 class ffnord::vpn::provider::generic (
-  $name,   # name of the vpn service
+  $vpn_name,   # name of the vpn service
   $config, # src directory with configuration, keys etc.
 ) {
   include ffnord::vpn::provider
 
   file{
-    "/etc/openvpn/${name}/":
+    "/etc/openvpn/${vpn_name}/":
       ensure => directory,
       owner => 'root',
       group => 'root',
@@ -93,9 +93,9 @@ class ffnord::vpn::provider::generic (
       owner => 'root',
       group => 'root',
       mode => '0644',
-      target => "/etc/openvpn/${name}/${name}.conf",
+      target => "/etc/openvpn/${vpn_name}/${vpn_name}.conf",
       require => [
-        File["/etc/openvpn/${name}"],
+        File["/etc/openvpn/${vpn_name}"],
         Package['openvpn'],
       ],
       notify => [Service['openvpn']];
