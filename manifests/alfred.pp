@@ -2,21 +2,21 @@ class ffnord::alfred (
   $master = false
 ) {
   vcsrepo { '/opt/alfred':
-    ensure => present,
+    ensure   => present,
     provider => git,
     revision => '6ffa009183cf5a223bf2198f7711b143b1e80109',
-    source => 'http://git.open-mesh.org/alfred.git';
+    source   => 'http://git.open-mesh.org/alfred.git';
   }
 
   file { '/etc/init.d/alfred':
     ensure => file,
-    mode => '0755',
+    mode   => '0755',
     source => 'puppet:///modules/ffnord/etc/init.d/alfred';
   }
 
   file { '/usr/local/bin/alfred-announce':
     ensure => file,
-    mode => '0755',
+    mode   => '0755',
     source => 'puppet:///modules/ffnord/usr/local/bin/alfred-announce';
   }
 
@@ -40,18 +40,18 @@ class ffnord::alfred (
   }
 
   service { 'alfred':
-    ensure => running,
+    ensure     => running,
     hasrestart => true,
-    enable => false,
-    require => [Exec['alfred'],File['/etc/init.d/alfred']];
+    enable     => false,
+    require    => [Exec['alfred'],File['/etc/init.d/alfred']];
   }
 
   vcsrepo { '/opt/alfred-announce':
-    ensure => present,
+    ensure   => present,
     provider => git,
-    source => 'https://github.com/ffnord/ffnord-alfred-announce.git',
+    source   => 'https://github.com/ffnord/ffnord-alfred-announce.git',
     revision => 'b31922fd53d2796b69ac4bd260ad837a200d0d5f',
-    require => [Package['python3'],Package['ethtool']];
+    require  => [Package['python3'],Package['ethtool']];
   }
 
   cron {
@@ -65,7 +65,7 @@ class ffnord::alfred (
   ffnord::firewall::service { 'alfred':
     protos => ['udp'],
     chains => ['mesh','bat'],
-    ports => ['16962'],
+    ports  => ['16962'],
   }
 
   if $master {
