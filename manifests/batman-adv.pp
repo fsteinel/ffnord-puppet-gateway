@@ -9,18 +9,18 @@ define ffnord::batman_adv(
 
   file {
     "/etc/network/interfaces.d/${mesh_code}-batman":
-    ensure  => file,
-    content => template('ffnord/etc/network/mesh-batman.erb'),
-    require => $batman_version ? {
-      14      => [Package['batctl'],Package['batman-adv-dkms']],
-      default => [Package['batctl']]
+      ensure  => file,
+      content => template('ffnord/etc/network/mesh-batman.erb'),
+      require => $batman_version ? {
+        14      => [Package['batctl'],Package['batman-adv-dkms']],
+        default => [Package['batctl']]
     }
   }
 
   file_line {
-  "root_bashrc_bat${mesh_code}":
-    path => '/root/.bashrc',
-    line => "alias batctl-${mesh_code}='batctl -m bat-${mesh_code}'"
+   "root_bashrc_bat${mesh_code}":
+     path => '/root/.bashrc',
+     line => "alias batctl-${mesh_code}='batctl -m bat-${mesh_code}'"
   }
 
   ffnord::monitor::zabbix::check_script {

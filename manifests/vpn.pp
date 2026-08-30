@@ -41,20 +41,20 @@ class ffnord::vpn::provider () {
 
   # Define Firewall rule for masquerade
   file {
-  '/etc/iptables.d/910-Masquerade-tun-anonvpn':
-    ensure  => file,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => 'ip4tables -t nat -A POSTROUTING -o tun-anonvpn -j MASQUERADE',
-    require => [File['/etc/iptables.d/']];
-  '/etc/openvpn/anonvpn-up.sh':
-    ensure => file,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0755',
-    source => 'puppet:///modules/ffnord/etc/openvpn/anonvpn-up.sh',
-    require => [Package['openvpn']];
+    '/etc/iptables.d/910-Masquerade-tun-anonvpn':
+      ensure  => file,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      content => 'ip4tables -t nat -A POSTROUTING -o tun-anonvpn -j MASQUERADE',
+      require => [File['/etc/iptables.d/']];
+    '/etc/openvpn/anonvpn-up.sh':
+      ensure  => file,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
+      source  => 'puppet:///modules/ffnord/etc/openvpn/anonvpn-up.sh',
+      require => [Package['openvpn']];
   }
 }
 
