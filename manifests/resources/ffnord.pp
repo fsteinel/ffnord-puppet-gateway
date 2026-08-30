@@ -3,7 +3,7 @@
 class ffnord::resources::ffnord {
   file { '/etc/ffnord':
     ensure => file,
-    mode => '0644';
+    mode   => '0644';
   }
 }
 
@@ -19,8 +19,8 @@ define ffnord::resources::ffnord::field(
   include ffnord::resources::ffnord
 
   file_line { $name:
-      path => '/etc/ffnord',
+      path  => '/etc/ffnord',
       match => "^${name}=.*",
-      line => "${name}=${value}";
+      line  => "${name}=${value}";
   }
 }

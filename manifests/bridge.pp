@@ -21,7 +21,7 @@ define ffnord::bridge( $mesh_code
   Class['ffnord::resources::network'] ->
   file {
     "/etc/network/interfaces.d/${mesh_code}-bridge":
-      ensure => file,
+      ensure  => file,
       content => template('ffnord/etc/network/mesh-bridge.erb');
   } ->
   exec {

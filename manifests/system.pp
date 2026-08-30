@@ -14,10 +14,10 @@ class ffnord::system::conntrack (
 ) inherits ffnord::params {
   file {
     '/etc/sysctl.d/conntrack.conf':
-      ensure => file,
-      mode => '0644',
-      owner => 'root',
-      group => 'root',
+      ensure  => file,
+      mode    => '0644',
+      owner   => 'root',
+      group   => 'root',
       content => inline_template("net.netfilter.nf_conntrack_max=<%=@conntrack_max%>\n");
   }
 
@@ -29,10 +29,10 @@ class ffnord::system::conntrack (
 
   file {
     '/etc/sysctl.d/routing.conf':
-      ensure => file,
-      mode => '0644',
-      owner => 'root',
-      group => 'root',
+      ensure  => file,
+      mode    => '0644',
+      owner   => 'root',
+      group   => 'root',
       content => template('ffnord/etc/sysctl.d/routing.conf');
   }
 

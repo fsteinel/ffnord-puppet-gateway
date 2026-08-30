@@ -36,16 +36,16 @@ define ffnord::icvpn::setup (
 
   if $ffnord::params::include_bird4 {
     ffnord::bird4::icvpn { $name:
-      icvpn_as => $icvpn_as,
+      icvpn_as           => $icvpn_as,
       icvpn_ipv4_address => $icvpn_ipv4_address,
       icvpn_ipv6_address => $icvpn_ipv6_address,
-      tinc_keyfile => $tinc_keyfile }
+      tinc_keyfile       => $tinc_keyfile }
   }
   if $ffnord::params::include_bird6 {
     ffnord::bird6::icvpn { $name:
-      icvpn_as => $icvpn_as,
+      icvpn_as           => $icvpn_as,
       icvpn_ipv4_address => $icvpn_ipv4_address,
       icvpn_ipv6_address => $icvpn_ipv6_address,
-      tinc_keyfile => $tinc_keyfile }
+      tinc_keyfile       => $tinc_keyfile }
   }
 }

@@ -9,7 +9,7 @@ class ffnord::vpn (
   class {
     'ffnord::resources::checkgw':
       gw_control_ips => $gw_control_ips,
-      gw_bandwidth => $gw_bandwidth,
+      gw_bandwidth   => $gw_bandwidth,
   }
 }
 
@@ -18,10 +18,10 @@ class ffnord::vpn::provider () {
   include ffnord::firewall
 
   service {'openvpn':
-    ensure  => running,
+    ensure     => running,
     hasrestart => true,
-    require => Package['openvpn'],
-    notify => Class['ffnord::vpn'];
+    require    => Package['openvpn'],
+    notify     => Class['ffnord::vpn'];
   }
   package { 'openvpn':
     ensure => installed;
@@ -42,17 +42,17 @@ class ffnord::vpn::provider () {
   # Define Firewall rule for masquerade
   file {
   '/etc/iptables.d/910-Masquerade-tun-anonvpn':
-    ensure => file,
-    owner => 'root',
-    group => 'root',
-    mode => '0644',
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
     content => 'ip4tables -t nat -A POSTROUTING -o tun-anonvpn -j MASQUERADE',
     require => [File['/etc/iptables.d/']];
   '/etc/openvpn/anonvpn-up.sh':
     ensure => file,
-    owner => 'root',
-    group => 'root',
-    mode => '0755',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
     source => 'puppet:///modules/ffnord/etc/openvpn/anonvpn-up.sh',
     require => [Package['openvpn']];
   }
@@ -81,24 +81,24 @@ class ffnord::vpn::provider::generic (
 
   file{
     "/etc/openvpn/${vpn_name}/":
-      ensure => directory,
-      owner => 'root',
-      group => 'root',
-      mode => '0644',
-      source => $config,
+      ensure  => directory,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      source  => $config,
       recurse => true,
       require => [Package['openvpn']];
     '/etc/openvpn/anonvpn.conf':
-      ensure => link,
-      owner => 'root',
-      group => 'root',
-      mode => '0644',
-      target => "/etc/openvpn/${vpn_name}/${vpn_name}.conf",
+      ensure  => link,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      target  => "/etc/openvpn/${vpn_name}/${vpn_name}.conf",
       require => [
         File["/etc/openvpn/${vpn_name}"],
         Package['openvpn'],
       ],
-      notify => [Service['openvpn']];
+      notify  => [Service['openvpn']];
   }
 }
 
@@ -112,11 +112,11 @@ class ffnord::vpn::provider::hideio (
 
   file {
     '/etc/openvpn/anonvpn.conf':
-      ensure => link,
-      owner => 'root',
-      group => 'root',
-      mode => '0644',
-      target => '/etc/openvpn/hideio/hideio.conf',
+      ensure  => link,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      target  => '/etc/openvpn/hideio/hideio.conf',
       require => [
         File['/etc/openvpn/hideio/hideio.conf'],
         File['/etc/openvpn/hideio/password'],
@@ -126,31 +126,31 @@ class ffnord::vpn::provider::hideio (
       ],
       notify => [Service['openvpn']];
     '/etc/openvpn/hideio':
-      ensure => directory,
-      owner => 'root',
-      group => 'root',
-      mode => '0755',
+      ensure  => directory,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
       require => [Package['openvpn']];
     '/etc/openvpn/hideio/hideio.conf':
-      ensure => file,
-      owner => 'root',
-      group => 'root',
-      mode => '0644',
+      ensure  => file,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
       content => template('ffnord/etc/openvpn/hideio.conf.erb'),
       require => [File['/etc/openvpn/hideio'],Package['openvpn']];
     '/etc/openvpn/hideio/password':
-      ensure => file,
-      owner => 'root',
-      group => 'root',
-      mode => '0640',
+      ensure  => file,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0640',
       content => template('ffnord/etc/openvpn/password.erb'),
       require => [File['/etc/openvpn/hideio']];
     '/etc/openvpn/hideio/TrustedRoot.pem':
-      ensure => file,
-      owner => 'root',
-      group => 'root',
-      mode => '0644',
-      source => 'puppet:///modules/ffnord/etc/openvpn/hideio.root.pem',
+      ensure  => file,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      source  => 'puppet:///modules/ffnord/etc/openvpn/hideio.root.pem',
       require => [File['/etc/openvpn/hideio']];
   }
 }
@@ -165,11 +165,11 @@ class ffnord::vpn::provider::pia (
 
   file {
     '/etc/openvpn/anonvpn.conf':
-      ensure => link,
-      owner => 'root',
-      group => 'root',
-      mode => '0644',
-      target => '/etc/openvpn/pia/pia.conf',
+      ensure  => link,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      target  => '/etc/openvpn/pia/pia.conf',
       require => [
         File['/etc/openvpn/pia/pia.conf'],
         File['/etc/openvpn/pia/password'],
@@ -180,38 +180,38 @@ class ffnord::vpn::provider::pia (
       ],
       notify => [Service['openvpn']];
     '/etc/openvpn/pia':
-      ensure => directory,
-      owner => 'root',
-      group => 'root',
-      mode => '0755',
+      ensure  => directory,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
       require => [Package['openvpn']];
     '/etc/openvpn/pia/pia.conf':
-      ensure => file,
-      owner => 'root',
-      group => 'root',
-      mode => '0644',
+      ensure  => file,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
       content => template('ffnord/etc/openvpn/pia.conf.erb'),
       require => [File['/etc/openvpn/pia'],Package['openvpn']];
     '/etc/openvpn/pia/password':
-      ensure => file,
-      owner => 'root',
-      group => 'root',
-      mode => '0640',
+      ensure  => file,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0640',
       content => template('ffnord/etc/openvpn/password.erb'),
       require => [File['/etc/openvpn/pia']];
     '/etc/openvpn/pia/ca.rsa.2048.crt':
-      ensure => file,
-      owner => 'root',
-      group => 'root',
-      mode => '0644',
-      source => 'puppet:///modules/ffnord/etc/openvpn/ca.rsa.2048.crt',
+      ensure  => file,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      source  => 'puppet:///modules/ffnord/etc/openvpn/ca.rsa.2048.crt',
       require => [File['/etc/openvpn/pia']];
     '/etc/openvpn/pia/crl.rsa.2048.pem':
-      ensure => file,
-      owner => 'root',
-      group => 'root',
-      mode => '0644',
-      source => 'puppet:///modules/ffnord/etc/openvpn/crl.rsa.2048.pem',
+      ensure  => file,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      source  => 'puppet:///modules/ffnord/etc/openvpn/crl.rsa.2048.pem',
       require => [File['/etc/openvpn/pia']];
   }
 }

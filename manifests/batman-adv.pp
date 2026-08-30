@@ -9,10 +9,10 @@ define ffnord::batman_adv(
 
   file {
     "/etc/network/interfaces.d/${mesh_code}-batman":
-    ensure => file,
+    ensure  => file,
     content => template('ffnord/etc/network/mesh-batman.erb'),
     require => $batman_version ? {
-      14 => [Package['batctl'],Package['batman-adv-dkms']],
+      14      => [Package['batctl'],Package['batman-adv-dkms']],
       default => [Package['batctl']]
     }
   }
@@ -25,17 +25,17 @@ define ffnord::batman_adv(
 
   ffnord::monitor::zabbix::check_script {
     "${mesh_code}_gwmode":
-      mesh_code => $mesh_code,
+      mesh_code  => $mesh_code,
       scriptname => 'batman-gateway-mode-enabled',
-      sudo => true;
+      sudo       => true;
     "${mesh_code}_maxmetric":
-      mesh_code => $mesh_code,
+      mesh_code  => $mesh_code,
       scriptname => 'batman-maximum-gateway-metric',
-      sudo => true;
+      sudo       => true;
     "${mesh_code}_gwcount":
-      mesh_code => $mesh_code,
+      mesh_code  => $mesh_code,
       scriptname => 'batman-visible-gateway-count',
-      sudo => true;
+      sudo       => true;
   }
 
   ffnord::firewall::device { "bat-${mesh_code}":

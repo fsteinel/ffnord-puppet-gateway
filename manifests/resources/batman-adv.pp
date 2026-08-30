@@ -6,10 +6,10 @@ class ffnord::resources::batman_adv (
   Class[ffnord::resources::repos]
   ->
   package {
-    'batctl': ensure => installed;
+    'batctl': ensure          => installed;
     'batman-adv-dkms': ensure => $batman_version ? {
-      14 => 'installed',
-      default => 'purged'
+      14                      => 'installed',
+      default                 => 'purged'
     }
   }
 }

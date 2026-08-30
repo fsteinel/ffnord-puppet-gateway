@@ -13,9 +13,9 @@ class ffnord::mosh {
     file {
     '/etc/apt/preferences.d/mosh':
       ensure => file,
-      mode => '0644',
-      owner => root,
-      group => root,
+      mode   => '0644',
+      owner  => root,
+      group  => root,
       source => 'puppet:///modules/ffnord/etc/apt/preferences.d/mosh';
     }
   } else {

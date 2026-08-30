@@ -8,13 +8,13 @@ class ffnord::resources::fastd {
 
   file {
     '/usr/local/bin/fastd-query':
-      ensure => file,
-      mode => '0755',
+      ensure  => file,
+      mode    => '0755',
       require => [
         Package['jq'],
         Package['socat'],
       ],
-      source => 'puppet:///modules/ffnord/usr/local/bin/fastd-query';
+      source  => 'puppet:///modules/ffnord/usr/local/bin/fastd-query';
   }
 
   package { ['jq','socat']:
@@ -28,9 +28,9 @@ class ffnord::resources::fastd::auto_fetch_keys {
   include ffnord::resources::update
 
   file { '/usr/local/bin/update-fastd-keys':
-    ensure => file,
-    mode => '0755',
-    source => 'puppet:///modules/ffnord/usr/local/bin/update-fastd-keys',
+    ensure  => file,
+    mode    => '0755',
+    source  => 'puppet:///modules/ffnord/usr/local/bin/update-fastd-keys',
     require => Class['ffnord::resources::update'];
   }
 

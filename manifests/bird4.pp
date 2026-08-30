@@ -10,7 +10,7 @@ class ffnord::bird4 (
 
   if($::lsbdistcodename=='wheezy'){
     package {'bird':
-      ensure => installed,
+      ensure  => installed,
       require => [
         File['/etc/apt/preferences.d/bird'],
         Apt::Source['debian-backports']
@@ -22,14 +22,14 @@ class ffnord::bird4 (
     }
   }
   file { '/etc/bird/bird.conf.d/':
-    ensure => directory,
-    mode => '0755',
-    owner => root,
-    group => root,
+    ensure  => directory,
+    mode    => '0755',
+    owner   => root,
+    group   => root,
     require => File['/etc/bird/'];
   '/etc/bird/bird.conf':
-    ensure => file,
-    mode => '0644',
+    ensure  => file,
+    mode    => '0644',
     content => template('ffnord/etc/bird/bird.conf.erb'),
     require => [
       Package['bird'],
@@ -38,19 +38,19 @@ class ffnord::bird4 (
     ],
     before => Class['ffnord::resources::meta'];
   '/etc/bird.conf':
-    ensure => link,
-    target => '/etc/bird/bird.conf',
+    ensure  => link,
+    target  => '/etc/bird/bird.conf',
     require => File['/etc/bird/bird.conf'],
-    notify => Service['bird'];
+    notify  => Service['bird'];
   }
 
   service {
     'bird':
-      ensure => running,
-      enable => true,
+      ensure    => running,
+      enable    => true,
       hasstatus => false,
-      restart => '/usr/sbin/birdc configure',
-      require => Package['bird'],
+      restart   => '/usr/sbin/birdc configure',
+      require   => Package['bird'],
       subscribe => File['/etc/bird/bird.conf'];
   }
 
@@ -74,14 +74,14 @@ define ffnord::bird4::mesh (
   include ffnord::bird4
 
   file_line { "bird-${mesh_code}-include":
-    path => '/etc/bird/bird.conf',
-    line => "include \"/etc/bird/bird.conf.d/${mesh_code}.conf\";",
+    path    => '/etc/bird/bird.conf',
+    line    => "include \"/etc/bird/bird.conf.d/${mesh_code}.conf\";",
     require => File['/etc/bird/bird.conf'],
     notify  => Service['bird'];
   }
 
   file { "/etc/bird/bird.conf.d/${mesh_code}.conf":
-    mode => '0644',
+    mode    => '0644',
     content => template('ffnord/etc/bird/bird.interface.conf.erb'),
     require => [File['/etc/bird/bird.conf.d/'],Package['bird']],
     notify  => [
@@ -108,15 +108,15 @@ define ffnord::bird4::icvpn (
 
   file_line {
     'icvpn-template':
-      path => '/etc/bird/bird.conf',
-      line => 'include "/etc/bird/bird.conf.d/icvpn-template.conf";',
+      path    => '/etc/bird/bird.conf',
+      line    => 'include "/etc/bird/bird.conf.d/icvpn-template.conf";',
       require => File['/etc/bird/bird.conf'],
       notify  => Service['bird'];
   }->
   file_line {
     'icvpn-include':
-      path => '/etc/bird/bird.conf',
-      line => 'include "/etc/bird/bird.conf.d/icvpn-peers.conf";',
+      path    => '/etc/bird/bird.conf',
+      line    => 'include "/etc/bird/bird.conf.d/icvpn-peers.conf";',
       require => [
         File['/etc/bird/bird.conf'],
         Class['ffnord::resources::meta']
@@ -126,7 +126,7 @@ define ffnord::bird4::icvpn (
 
   # Process meta data from tinc directory
   file { '/etc/bird/bird.conf.d/icvpn-template.conf':
-    mode => '0644',
+    mode    => '0644',
     content => template('ffnord/etc/bird/bird.icvpn-template.conf.erb'),
     require => [
       File['/etc/bird/bird.conf.d/'],

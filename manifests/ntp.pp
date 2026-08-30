@@ -7,31 +7,31 @@ class ffnord::ntp () {
 
   file {
     '/etc/ntp.conf':
-      ensure => file,
-      mode => '0644',
-      owner => 'root',
-      group => 'root',
-      source => 'puppet:///modules/ffnord/etc/ntp.conf',
+      ensure  => file,
+      mode    => '0644',
+      owner   => 'root',
+      group   => 'root',
+      source  => 'puppet:///modules/ffnord/etc/ntp.conf',
       require => Package['ntp'];
   }
 
   service {
     'ntp':
-      ensure => running,
-      enable => true,
+      ensure     => running,
+      enable     => true,
       hasrestart => true,
-      require => [
+      require    => [
         Package['ntp'],
         File['/etc/ntp.conf']
       ]
   }
 
   ffnord::firewall::service { 'ntpd':
-    ports => ['123'],
-    protos => ['udp'],
-    chains => ['mesh'],
-    rate_limit => true,
-    rate_limit_seconds => 3600,
+    ports               => ['123'],
+    protos              => ['udp'],
+    chains              => ['mesh'],
+    rate_limit          => true,
+    rate_limit_seconds  => 3600,
     rate_limit_hitcount => 10,
   }
 }
@@ -53,15 +53,15 @@ define ffnord::ntp::allow(
 
   file_line {
     "ntp_restrict_v4_${name}":
-    path => '/etc/ntp.conf',
-    line => "restrict ${ipv4_prefix} mask ${ipv4_netmask} nomodify notrap nopeer",
+    path    => '/etc/ntp.conf',
+    line    => "restrict ${ipv4_prefix} mask ${ipv4_netmask} nomodify notrap nopeer",
     require => File['/etc/ntp.conf'];
   }
 
   file_line {
     "ntp_restrict_v6_${name}":
-    path => '/etc/ntp.conf',
-    line => "restrict ${ipv6_prefix} mask ${ipv6_netmask} nomodify notrap nopeer",
+    path    => '/etc/ntp.conf',
+    line    => "restrict ${ipv6_prefix} mask ${ipv6_netmask} nomodify notrap nopeer",
     require => File['/etc/ntp.conf'];
   }
 

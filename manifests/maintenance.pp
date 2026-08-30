@@ -12,9 +12,9 @@ class ffnord::maintenance (
   file {
     '/usr/local/bin/maintenance':
       ensure => file,
-      owner => 'root',
-      group => 'root',
-      mode => '0755',
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0755',
       source => 'puppet:///modules/ffnord/usr/local/bin/maintenance';
   }
 }

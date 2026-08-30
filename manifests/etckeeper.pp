@@ -4,9 +4,9 @@ class ffnord::etckeeper {
   file {
     '/etc/.gitignore':
       ensure => file,
-      owner => 'root',
-      group => 'root',
-      mode => '0600';
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0600';
   } ->
 
   # Ensure that we do not track the ffnord module
@@ -37,8 +37,8 @@ define ffnord::etckeeper::ignore {
       $ignore = regsubst($name,'^/etc/(.*)$','\1')
       file_line {
         "etckeeper_${name}":
-          path => '/etc/.gitignore',
-          line => $ignore,
+          path   => '/etc/.gitignore',
+          line   => $ignore,
           before => Package['etckeeper'];
       }
     }

@@ -13,7 +13,7 @@ define ffnord::radvd (
   ->
   file {
   "/etc/radvd.conf.d/interface-${name}.conf":
-    ensure => file,
+    ensure  => file,
     content => template('ffnord/etc/radvd.conf.erb');
   }
   ->
@@ -32,18 +32,18 @@ class ffnord::radvd::base () {
   file {
     '/etc/radvd.conf.d':
       ensure => directory,
-      mode => '0755';
+      mode   => '0755';
   }
   package {
     'radvd':
-      ensure => installed,
+      ensure  => installed,
       require => File['/etc/radvd.conf.d'];
   }
   service {
     'radvd':
-      ensure => running,
-      enable => true,
+      ensure     => running,
+      enable     => true,
       hasrestart => true,
-      require => [File['/etc/radvd.conf.d'],Package['radvd']];
+      require    => [File['/etc/radvd.conf.d'],Package['radvd']];
   }
 }

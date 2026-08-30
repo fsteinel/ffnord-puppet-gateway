@@ -15,28 +15,28 @@ define ffnord::dhcpd (
   if $ranges != [] {
 
     file { "/etc/dhcp/interface-${name}.conf":
-      ensure => file,
+      ensure  => file,
       content => template('ffnord/etc/dhcp/interface.erb'),
       require => [Package['isc-dhcp-server']],
-      notify => [Service['isc-dhcp-server']];
+      notify  => [Service['isc-dhcp-server']];
     }
 
     file_line { "ffnord::dhcpd::${name}-rule":
-      path => '/etc/dhcp/dhcpd.conf',
-      line => "include \"/etc/dhcp/interface-${name}.conf\";",
+      path    => '/etc/dhcp/dhcpd.conf',
+      line    => "include \"/etc/dhcp/interface-${name}.conf\";",
       require => [File['/etc/dhcp/dhcpd.conf']],
-      notify => [Service['isc-dhcp-server']];
+      notify  => [Service['isc-dhcp-server']];
     }
 
     ffnord::monitor::zabbix::check_script {
       "${mesh_code}_free_dhcppool":
-        mesh_code => $mesh_code,
+        mesh_code  => $mesh_code,
         scriptname => 'dhcp-pool-usage',
-        extra => 'free';
+        extra      => 'free';
       "${mesh_code}_used_dhcppool":
-        mesh_code => $mesh_code,
+        mesh_code  => $mesh_code,
         scriptname => 'dhcp-pool-usage',
-        extra => 'used';
+        extra      => 'used';
     }
   }
 }
@@ -55,13 +55,13 @@ class ffnord::dhcpd::base {
 
   file {
     '/etc/dhcp/dhcpd.conf':
-      ensure => file,
-      mode   => '0644',
-      owner  => 'root',
-      group  => 'root',
-      source => 'puppet:///modules/ffnord/etc/dhcp/dhcpd.conf',
+      ensure  => file,
+      mode    => '0644',
+      owner   => 'root',
+      group   => 'root',
+      source  => 'puppet:///modules/ffnord/etc/dhcp/dhcpd.conf',
       require => [Package['isc-dhcp-server']],
-      notify => [Service['isc-dhcp-server']];
+      notify  => [Service['isc-dhcp-server']];
   }
 
   ffnord::firewall::service { 'dhcpd':
@@ -74,9 +74,9 @@ class ffnord::dhcpd::base {
 class ffnord::dhcpd::service {
   service {
     'isc-dhcp-server':
-      ensure => running,
+      ensure     => running,
       hasrestart => true,
-      enable => true;
+      enable     => true;
   }
 }
 
@@ -89,10 +89,10 @@ define ffnord::dhcpd::static (
 
   file{
     '/etc/dhcp/statics/':
-      ensure => directory,
-      owner => 'root',
-      group => 'root',
-      mode => '0755',
+      ensure  => directory,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
       require => Package['isc-dhcp-server'];
   }
 
@@ -107,18 +107,18 @@ define ffnord::dhcpd::static (
 
   file{
     "/etc/dhcp/statics/${static_name}/.git/hooks/post-merge":
-      ensure => file,
-      owner => 'root',
-      group => 'root',
-      mode => '0755',
+      ensure  => file,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
       content => "#!/bin/sh\n/usr/local/bin/update-statics reload",
       require => Vcsrepo["/etc/dhcp/statics/${static_name}/"];
   }
 
   file_line {
     "static-${static_name}":
-      path => "/etc/dhcp/interface-br-${static_name}.conf",
-      line => "include \"/etc/dhcp/statics/${static_name}/static.conf\";",
+      path    => "/etc/dhcp/interface-br-${static_name}.conf",
+      line    => "include \"/etc/dhcp/statics/${static_name}/static.conf\";",
       require => [
         Vcsrepo["/etc/dhcp/statics/${static_name}/"],
         File["/etc/dhcp/interface-br-${static_name}.conf"]
@@ -127,19 +127,19 @@ define ffnord::dhcpd::static (
 
   file {
   '/usr/local/bin/update-statics':
-    ensure => file,
-    owner => 'root',
-    group => 'root',
-    mode => '0755',
-    source => 'puppet:///modules/ffnord/usr/local/bin/update-statics',
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    source  => 'puppet:///modules/ffnord/usr/local/bin/update-statics',
     require =>  Vcsrepo["/etc/dhcp/statics/${static_name}/"];
   }
 
   cron {
     'update-statics':
       command => '/usr/local/bin/update-statics pull',
-      user => root,
-      minute => [0,30],
+      user    => root,
+      minute  => [0,30],
       require => File['/usr/local/bin/update-statics'];
   }
 }

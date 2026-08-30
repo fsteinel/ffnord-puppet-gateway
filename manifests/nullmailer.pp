@@ -11,25 +11,25 @@ class ffnord::nullmailer(
 
   file {
     '/etc/nullmailer/adminaddr':
-      ensure => file,
+      ensure  => file,
       content => $adminaddr,
       require => Package[nullmailer];
     '/etc/nullmailer/defaultdomain':
-      ensure => file,
+      ensure  => file,
       content => $defaultdomain,
       require => Package[nullmailer];
     '/etc/nullmailer/remotes':
-      ensure => file,
+      ensure  => file,
       content => $remotes,
       require => Package[nullmailer];
   } ->
 
   service {
     'nullmailer':
-      ensure => running,
-      enable => true,
+      ensure     => running,
+      enable     => true,
       hasrestart => true,
-      require => [
+      require    => [
         Package['nullmailer']
       ];
   }

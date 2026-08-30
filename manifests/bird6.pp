@@ -12,7 +12,7 @@ class ffnord::bird6 (
   if($::lsbdistcodename=='wheezy'){
     package {
       'bird6':
-        ensure => installed,
+        ensure  => installed,
         require => [
           File['/etc/apt/preferences.d/bird'],
           Apt::Source['debian-backports']
@@ -26,35 +26,35 @@ class ffnord::bird6 (
   }
   file {
     '/etc/bird/bird6.conf.d/':
-      ensure => directory,
-      mode => '0755',
-      owner => root,
-      group => root,
+      ensure  => directory,
+      mode    => '0755',
+      owner   => root,
+      group   => root,
       require => File['/etc/bird/'];
     '/etc/bird/bird6.conf':
-      ensure => file,
-      mode => '0644',
+      ensure  => file,
+      mode    => '0644',
       content => template('ffnord/etc/bird/bird6.conf.erb'),
       require => [
         Package['bird6'],
         File['/etc/bird/'],
         File['/etc/bird/bird6.conf.d'],
       ],
-      before => Class['ffnord::resources::meta'];
+      before  => Class['ffnord::resources::meta'];
     '/etc/bird6.conf':
-      ensure => link,
-      target => '/etc/bird/bird6.conf',
+      ensure  => link,
+      target  => '/etc/bird/bird6.conf',
       require => File['/etc/bird/bird6.conf'],
-      notify => Service['bird6'];
+      notify  => Service['bird6'];
   }
 
   service {
     'bird6':
-      ensure => running,
-      enable => true,
+      ensure    => running,
+      enable    => true,
       hasstatus => false,
-      restart => '/usr/sbin/birdc6 configure',
-      require => Package['bird6'],
+      restart   => '/usr/sbin/birdc6 configure',
+      require   => Package['bird6'],
       subscribe => File['/etc/bird/bird6.conf'];
   }
 
@@ -77,14 +77,14 @@ define ffnord::bird6::mesh (
   include ffnord::bird6
 
   file_line { "bird6-${mesh_code}-include":
-    path => '/etc/bird/bird6.conf',
-    line => "include \"/etc/bird/bird6.conf.d/${mesh_code}.conf\";",
+    path    => '/etc/bird/bird6.conf',
+    line    => "include \"/etc/bird/bird6.conf.d/${mesh_code}.conf\";",
     require => File['/etc/bird/bird6.conf'],
     notify  => Service['bird6'];
   }
 
   file { "/etc/bird/bird6.conf.d/${mesh_code}.conf":
-    mode => '0644',
+    mode    => '0644',
     content => template('ffnord/etc/bird/bird6.interface.conf.erb'),
     require => [File['/etc/bird/bird6.conf.d/'],Package['bird6']],
     notify  => [
@@ -112,15 +112,15 @@ define ffnord::bird6::icvpn (
 
   file_line {
     'icvpn-template6':
-      path => '/etc/bird/bird6.conf',
-      line => 'include "/etc/bird/bird6.conf.d/icvpn-template.conf";',
+      path    => '/etc/bird/bird6.conf',
+      line    => 'include "/etc/bird/bird6.conf.d/icvpn-template.conf";',
       require => File['/etc/bird/bird6.conf'],
       notify  => Service['bird6'];
   }->
   file_line {
     'icvpn-include6':
-      path => '/etc/bird/bird6.conf',
-      line => 'include "/etc/bird/bird6.conf.d/icvpn-peers.conf";',
+      path    => '/etc/bird/bird6.conf',
+      line    => 'include "/etc/bird/bird6.conf.d/icvpn-peers.conf";',
       require => [
         File['/etc/bird/bird6.conf'],
         Class['ffnord::resources::meta']
@@ -130,7 +130,7 @@ define ffnord::bird6::icvpn (
 
   # Process meta data from tinc directory
   file { '/etc/bird/bird6.conf.d/icvpn-template.conf':
-    mode => '0644',
+    mode    => '0644',
     content => template('ffnord/etc/bird/bird6.icvpn-template.conf.erb'),
     require => [
       File['/etc/bird/bird6.conf.d/'],

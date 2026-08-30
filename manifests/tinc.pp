@@ -8,7 +8,7 @@ class ffnord::tinc (
   if($::lsbdistcodename=='wheezy'){
     package {
       'tinc':
-        ensure => installed,
+        ensure  => installed,
         require => [
           File['/etc/apt/preferences.d/tinc'],
           Apt::Source['debian-backports']
@@ -23,9 +23,9 @@ class ffnord::tinc (
 
   service {
     'tinc':
-      ensure => running,
-      enable => true,
-      require => [
+      ensure    => running,
+      enable    => true,
+      require   => [
         Package['tinc'],
         File['/etc/tinc/icvpn/tinc.conf'],
         File_line['icvpn-auto-boot']
@@ -56,28 +56,28 @@ class ffnord::tinc (
       ensure  => file,
       content => template('ffnord/etc/tinc/icvpn/tinc-down.erb'),
       require => Vcsrepo['/etc/tinc/icvpn/'],
-      mode => '0755';
+      mode    => '0755';
     '/etc/tinc/icvpn/.git/hooks/post-merge':
-      ensure => link,
-      target => '/etc/tinc/icvpn/scripts/post-merge',
+      ensure  => link,
+      target  => '/etc/tinc/icvpn/scripts/post-merge',
       require => Vcsrepo['/etc/tinc/icvpn/'],
-      mode => '0755';
+      mode    => '0755';
   }
   if($::lsbdistcodename=='wheezy') {
     file {
     '/etc/apt/preferences.d/tinc':
       ensure => file,
-      mode => '0644',
-      owner => root,
-      group => root,
+      mode   => '0644',
+      owner  => root,
+      group  => root,
       source => 'puppet:///modules/ffnord/etc/apt/preferences.d/tinc';
     }
   }
 
   file_line {
     'icvpn-auto-boot':
-      path => '/etc/tinc/nets.boot',
-      line => 'icvpn',
+      path    => '/etc/tinc/nets.boot',
+      line    => 'icvpn',
       require => Package['tinc'];
   }
 
@@ -85,7 +85,7 @@ class ffnord::tinc (
     ensure   => present,
     provider => git,
     source   => 'https://github.com/freifunk/icvpn.git',
-    require => Package['tinc']
+    require  => Package['tinc']
   }
 
   ffnord::etckeeper::ignore {
@@ -103,8 +103,8 @@ class ffnord::tinc (
 
   exec { 'update-icvpn-once':
     command => '/etc/tinc/icvpn/scripts/post-merge',
-    cwd => '/etc/tinc/icvpn',
-    unless => '/bin/grep -c ConnectTo /etc/tinc/icvpn/tinc.conf',
+    cwd     => '/etc/tinc/icvpn',
+    unless  => '/bin/grep -c ConnectTo /etc/tinc/icvpn/tinc.conf',
     require => Vcsrepo['/etc/tinc/icvpn/'],
   }
 

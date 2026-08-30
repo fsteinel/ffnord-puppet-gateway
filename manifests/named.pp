@@ -19,11 +19,11 @@ class ffnord::named () {
 
   service {
     'bind9':
-      ensure => running,
-      enable => true,
+      ensure     => running,
+      enable     => true,
       hasrestart => true,
-      restart => '/usr/sbin/rndc reload',
-      require => [
+      restart    => '/usr/sbin/rndc reload',
+      require    => [
         Package['bind9'],
         File['/etc/bind/named.conf.options'],
         File_line['icvpn-meta'],
@@ -41,9 +41,9 @@ class ffnord::named () {
 
   file_line {
   'icvpn-meta':
-    path => '/etc/bind/named.conf',
-    line => 'include "/etc/bind/named.conf.icvpn-meta";',
-    before => Class['ffnord::resources::meta'],
+    path    => '/etc/bind/named.conf',
+    line    => 'include "/etc/bind/named.conf.icvpn-meta";',
+    before  => Class['ffnord::resources::meta'],
     require => [
       Package['bind9']
     ];
@@ -71,10 +71,10 @@ define ffnord::named::zone (
 
   file{
     '/etc/bind/zones/':
-      ensure => directory,
-      owner => 'root',
-      group => 'root',
-      mode => '0755',
+      ensure  => directory,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
       require => Package['bind9'];
   }
 
@@ -89,18 +89,18 @@ define ffnord::named::zone (
 
   file{
     "/etc/bind/zones/${zone_name}/.git/hooks/post-merge":
-      ensure => file,
-      owner => 'root',
-      group => 'root',
-      mode => '0755',
+      ensure  => file,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
       content => "#!/bin/sh\n/usr/local/bin/update-zones reload",
       require => Vcsrepo["/etc/bind/zones/${zone_name}/"];
   }
 
   file_line {
     "zone-${zone_name}":
-      path => '/etc/bind/named.conf',
-      line => "include \"/etc/bind/zones/${zone_name}/${zone_name}.conf\";",
+      path    => '/etc/bind/named.conf',
+      line    => "include \"/etc/bind/zones/${zone_name}/${zone_name}.conf\";",
       require => [
         Vcsrepo["/etc/bind/zones/${zone_name}/"]
       ];
@@ -108,19 +108,19 @@ define ffnord::named::zone (
 
   file {
   '/usr/local/bin/update-zones':
-    ensure => file,
-    owner => 'root',
-    group => 'root',
-    mode => '0755',
-    source => 'puppet:///modules/ffnord/usr/local/bin/update-zones',
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    source  => 'puppet:///modules/ffnord/usr/local/bin/update-zones',
     require =>  Vcsrepo["/etc/bind/zones/${zone_name}/"];
   }
 
   cron {
     'update-zones':
       command => '/usr/local/bin/update-zones pull',
-      user => root,
-      minute => [0,30],
+      user    => root,
+      minute  => [0,30],
       require => File['/usr/local/bin/update-zones'];
   }
 
