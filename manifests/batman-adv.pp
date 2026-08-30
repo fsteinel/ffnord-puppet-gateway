@@ -1,10 +1,10 @@
-define ffnord::batman-adv(
+define ffnord::batman_adv(
   $mesh_code,
   $mesh_hop_penalty,
   $batman_it = 5000,
   $batman_version = $ffnord::params::batman_version
 ) {
-  include ffnord::resources::batman-adv
+  include ffnord::resources::batman_adv
   include ffnord::firewall
 
   file {

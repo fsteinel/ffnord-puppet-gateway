@@ -43,8 +43,8 @@ define ffnord::fastd( $mesh_code,
     source => $fastd_secret,
     mode   => '0600',
   }
-  if ! defined(Ffnord::Batman-Adv["ffnord_batman_adv_${mesh_code}"]) {
-      ffnord::batman-adv { "ffnord_batman_adv_${mesh_code}":
+  if ! defined(Ffnord::Batman_-Adv["ffnord_batman_adv_${mesh_code}"]) {
+      ffnord::batman_adv { "ffnord_batman_adv_${mesh_code}":
         mesh_code        => $mesh_code,
         mesh_hop_penalty => $mesh_hop_penalty;
       }

@@ -1,4 +1,4 @@
-class ffnord::resources::batman-adv (
+class ffnord::resources::batman_-adv (
   $batman_version = $ffnord::params::batman_version
 ) inherits ffnord::params {
   include ffnord::resources::repos
