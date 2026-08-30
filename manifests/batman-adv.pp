@@ -18,9 +18,9 @@ define ffnord::batman_adv (
   }
 
   file_line {
-   "root_bashrc_bat${mesh_code}":
-     path => '/root/.bashrc',
-     line => "alias batctl-${mesh_code}='batctl -m bat-${mesh_code}'"
+    "root_bashrc_bat${mesh_code}":
+      path => '/root/.bashrc',
+      line => "alias batctl-${mesh_code}='batctl -m bat-${mesh_code}'"
   }
 
   ffnord::monitor::zabbix::check_script {
